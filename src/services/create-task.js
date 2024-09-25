@@ -1,4 +1,8 @@
 import { randomUUID } from 'node:crypto'
+import { Database } from "../database.js";
+
+const database = new Database()
+
 export const createTask = async (req, res) => {
     const { title, description } = req.body
 
@@ -6,15 +10,17 @@ export const createTask = async (req, res) => {
         id: randomUUID(),
         title,
         description,
-        created_at: new Date(),
-        updated_at: new Date(),
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
         completed_at: null
     }
-
     
     // Save task to database
+    database.insert('tasks', task);
     
-    res.setHeader('Content-Type', 'application/json')
-    res.end(JSON.stringify(task))
+    
+    
+    res.writeHead(201).end()
 
+    return task
 }

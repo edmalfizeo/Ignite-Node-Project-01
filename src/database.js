@@ -6,7 +6,14 @@ export class Database {
     #database = {}
 
     #persist() {
-        fs.writeFile(databasePath, JSON.stringify(this.#database))
+        fs.writeFile(databasePath, JSON.stringify(this.#database, null, 2), (err) => {
+            if (err) {
+                console.error('Erro ao persistir o banco de dados:', err);
+            } else {
+                console.log('Banco de dados persistido com sucesso');
+            }
+        });
+    
     }
     
     constructor() {
@@ -20,14 +27,37 @@ export class Database {
     }
 
     insert(task, taskData) {
-        if(Array.isArray(this.#database[task])) {
-            this.#database[task].push(taskData)
+        if (Array.isArray(this.#database[task])) {
+            
+            this.#database[task].push(taskData);
         } else {
-            this.#database[task] = [taskData]
+            
+            this.#database[task] = [taskData];
         }
+    
+    this.#persist();
+    return taskData;
+    }
 
-        this.#persist()
+    async select(task, search) {
+        let data = [];
+        try {
+            const fileContent = await fs.readFile(databasePath);
+            this.#database = JSON.parse(fileContent);
+            data = this.#database[task] ?? [];
+        } catch (error) {
+            console.error("Erro ao ler o banco de dados:", error);
+        }
+        if (search) {
+            const searchText = search.search.toLowerCase();
+            data = data.filter(row => {
+                return Object.values(row).some(value =>
+                    value.toString().toLowerCase().includes(searchText)
+                );
+            });
+        }
+    
+        return data;
 
-        return taskData
     }
 }

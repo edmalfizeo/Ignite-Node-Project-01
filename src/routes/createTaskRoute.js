@@ -1,17 +1,16 @@
-import { createTask } from "../services/create-task";
-import { buildRoutePath } from "../utils/build-route-path";
-import { Database } from "../database";
-
-const database = new Database()
+import { createTask } from "../services/create-task.js";
+import { buildRoutePath } from "../utils/build-route-path.js";
 
 export const createTaskRoute = {
     method: 'POST',
     path: buildRoutePath('/tasks'),
-    handler: (req, res) => {
-        const task = createTask(req, res)
+    handler: async (req, res) => {
+        try { 
+            const task = await createTask(req, res);
 
-        database.insert('tasks', task)
-
-        return res.writeHead(201).end()
+            
+        } catch (error) {
+            console.error('Error:', error);
+        }
     }
-}
+ }

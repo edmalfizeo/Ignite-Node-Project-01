@@ -1,17 +1,17 @@
-import { listTask } from "../services/list-task";
-import { Database } from "../database";
-import { buildRoutePath } from "../utils/build-route-path";
+import { listTask } from "../services/list-task.js";
+import { Database } from "../database.js";
+import { buildRoutePath } from "../utils/build-route-path.js";
 
 const database = new Database();
 
 export const listTaskRoute = {
     method: 'GET',
     path: buildRoutePath('/tasks'),
-    handler: (req, res) => {
-        const { search } = req.query
+    handler: async (req, res) => { 
 
-        const tasks = listTask(database, search)
-
-        return res.end(JSON.stringify(tasks))
+        const tasks = await listTask(req, res);
+         
+        
+        return res.end(JSON.stringify(tasks));
     }
 }
