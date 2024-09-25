@@ -40,24 +40,17 @@ export class Database {
     }
 
     async select(task, search) {
-        let data = [];
-        try {
-            const fileContent = await fs.readFile(databasePath);
-            this.#database = JSON.parse(fileContent);
-            data = this.#database[task] ?? [];
-        } catch (error) {
-            console.error("Erro ao ler o banco de dados:", error);
-        }
+        let data = this.#database[task] ?? []
+
         if (search) {
-            const searchText = search.search.toLowerCase();
             data = data.filter(row => {
-                return Object.values(row).some(value =>
-                    value.toString().toLowerCase().includes(searchText)
-                );
-            });
+                return Object.entries(search).some(([key, value]) => {
+                    return row[key].toLowerCase().includes(value.toLowerCase())
+                })
+            })
         }
-    
-        return data;
+
+        return data
 
     }
 }
