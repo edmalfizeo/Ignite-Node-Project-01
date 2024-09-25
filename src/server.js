@@ -4,8 +4,9 @@ import { json } from './middlewares/json.js';
 import { extractQueryParams } from './utils/extract-query-params.js';
 import { createTaskRoute } from './routes/createTaskRoute.js'
 import { listTaskRoute } from './routes/listTaskRoute.js'
+import { updateTaskRoute } from './routes/updateTaskRoute.js';
 
-const routes = [createTaskRoute, listTaskRoute]
+const routes = [createTaskRoute, listTaskRoute, updateTaskRoute]
 
 const server = http.createServer(async (req, res) => {
     const { method, url } = req
