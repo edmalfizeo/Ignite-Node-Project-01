@@ -6,8 +6,9 @@ import { createTaskRoute } from './routes/createTaskRoute.js'
 import { listTaskRoute } from './routes/listTaskRoute.js'
 import { updateTaskRoute } from './routes/updateTaskRoute.js';
 import { completeTaskRoute } from './routes/completeTaskRoute.js';
+import { deleteTaskRoute } from './routes/deleteTaskRoute.js';
 
-const routes = [createTaskRoute, listTaskRoute, updateTaskRoute, completeTaskRoute]
+const routes = [createTaskRoute, listTaskRoute, updateTaskRoute, completeTaskRoute, deleteTaskRoute]
 
 const server = http.createServer(async (req, res) => {
     const { method, url } = req

@@ -102,4 +102,19 @@ export class Database {
             return null;
         }
     }
+
+    async delete(task, id) {
+        await this.#loadDatabase();
+        const data = this.#database[task] ?? []
+        const rowIndex = data.findIndex(row => row.id === id)
+
+        if (rowIndex > -1) {
+            this.#database[task].splice(rowIndex, 1);
+            this.#persist();
+            return true;
+        } else {
+            console.error(`Item com ID ${id} não encontrado na tabela ${task}`);
+            return false;
+        }
+    }
 }
