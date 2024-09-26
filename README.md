@@ -37,11 +37,3 @@ This is a simple Node.js project where I built a complete API to manage tasks. T
 2. For exporting tasks to a CSV file, run:
      ```bash
      node csv.js
-
-
-
-
-
-
-
-
