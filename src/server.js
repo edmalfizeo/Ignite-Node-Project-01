@@ -5,8 +5,9 @@ import { extractQueryParams } from './utils/extract-query-params.js';
 import { createTaskRoute } from './routes/createTaskRoute.js'
 import { listTaskRoute } from './routes/listTaskRoute.js'
 import { updateTaskRoute } from './routes/updateTaskRoute.js';
+import { completeTaskRoute } from './routes/completeTaskRoute.js';
 
-const routes = [createTaskRoute, listTaskRoute, updateTaskRoute]
+const routes = [createTaskRoute, listTaskRoute, updateTaskRoute, completeTaskRoute]
 
 const server = http.createServer(async (req, res) => {
     const { method, url } = req

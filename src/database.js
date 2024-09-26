@@ -88,4 +88,18 @@ export class Database {
         return null;
     }
     }
+
+    async complete(task, id) {
+        await this.#loadDatabase();
+        const rowIndex = this.#database[task].findIndex(row => row.id === id)
+
+        if (rowIndex > -1) {
+            this.#database[task][rowIndex].completed_at = new Date().toISOString();
+            this.#persist();
+            return this.#database[task][rowIndex];
+        } else {
+            console.error(`Item com ID ${id} não encontrado na tabela ${task}`);
+            return null;
+        }
+    }
 }
